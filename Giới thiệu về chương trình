@@ -1,0 +1,64 @@
+1. Làm phần logging views:
+    Terminal: php artisan make:auth
+2. Tạo View:
+    Tạo các view admin: trong view admin có view user, post, categories: trong các view đó thì lại có các thao tác create và edit.
+
+3. Tạo các bảng user qua migration:
+    NOTE: đẩy mã nguồn lên git trước để tránh mất code: (các lệnh qua terminal của Php Strorm)
+        a. git init
+        b. git status -> xem tình trạng cái file
+        c. git add .
+        d. git commit -m "my first commit"
+        e. git log
+
+     Thêm các trường vào bảng user : role_id và is_active
+
+    Tạo model và bảng role:
+    php artisan make:model Role -m
+
+4. Create Relationships:
+    Taọ mối quan hệ từ bảng user belongTo Role: để làm phân quyền về sau.
+
+5. Admin Controllers and Routes:
+    php artisan make:controller --resource AdminUsersController
+
+6. Installing NodeJs and files download:
+   Sử dụng laravel - mix :
+   Thêm các biến vào scripts --> xem file package.json
+   Chạy các lệnh sau:
+   1. npm install
+   2. npm run dev
+   3. npm run watch
+   4. npm run watch-poll
+
+
+7. style for admin page:
+    Xem file resources/assets/sass/app.scss : xem đoạn comment. Sau khi style xong chạy lại lệnh 'gulp' trên terminal
+    để nó gen lại file đã có code vừa style
+
+8. How to push fresh project to git hub :
+https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+
+9. Displaying Users:
+resources/views/admin/users/index.blade.php
+
+(How to use datatable:
+Thêm vào các lớp service ở biến providers của Autoloaded Service Providers và aliases của Class Aliases. Xem file config/app.php
+composer dump-autoload
+php artisan vendor:publish) --> cái này tạm thời ko dùng
+Xem file AdminUsersController.php (hàm index()) và file resources/views/admin/user/index.blade.php
+
+10. Create page:
+Xem file AdminUsersController.php (hàm create(), store()) và file resources/views/admin/user/create.blade.php
+
+Dùng laravel collective HTML 5.3: https://laravelcollective.com/docs/5.3/html
+composer require "laravelcollective/html":"^5.3.0"
+Tạo Live Template cho form
+
+Chú ý: ở phần này ta làm các form field như email, password, select và viết custom request cho các trường nhập vào
+
+Tạo thêm cột photo ở bảng user: php artisan make:migration add_photo_id_to_users --table=users
+
+
+Luồng chương trình:
+AdminUsersController: index() -> create() -> store()
