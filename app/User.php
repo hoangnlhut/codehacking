@@ -40,4 +40,11 @@ class User extends Model
     {
         return $this->belongsTo('App\Role');
     }
+
+    //Tạo relationship với Photo.
+    public function photo()
+    {
+        return $this->belongsTo('App\Photo');
+    }
+
 }

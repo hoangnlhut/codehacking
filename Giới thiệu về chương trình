@@ -59,6 +59,7 @@ Chú ý: ở phần này ta làm các form field như email, password, select v�
 
 Tạo thêm cột photo ở bảng user: php artisan make:migration add_photo_id_to_users --table=users
 
-
 Luồng chương trình:
 AdminUsersController: index() -> create() -> store()
+
+Xem các Model : User, Role, Photo (Tạo các cột trong các bảng, tạo mối quan hệ giữa các model với nhau)
