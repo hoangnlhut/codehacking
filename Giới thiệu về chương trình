@@ -37,29 +37,36 @@
     để nó gen lại file đã có code vừa style
 
 8. How to push fresh project to git hub :
-https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+    https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 
 9. Displaying Users:
-resources/views/admin/users/index.blade.php
+    resources/views/admin/users/index.blade.php
 
 (How to use datatable:
-Thêm vào các lớp service ở biến providers của Autoloaded Service Providers và aliases của Class Aliases. Xem file config/app.php
-composer dump-autoload
-php artisan vendor:publish) --> cái này tạm thời ko dùng
-Xem file AdminUsersController.php (hàm index()) và file resources/views/admin/user/index.blade.php
+    Thêm vào các lớp service ở biến providers của Autoloaded Service Providers và aliases của Class Aliases. Xem file           config/app.php
+    composer dump-autoload
+    php artisan vendor:publish) --> cái này tạm thời ko dùng
+    Xem file AdminUsersController.php (hàm index()) và file resources/views/admin/user/index.blade.php
 
 10. Create page:
-Xem file AdminUsersController.php (hàm create(), store()) và file resources/views/admin/user/create.blade.php
+    Xem file AdminUsersController.php (hàm create(), store()) và file resources/views/admin/user/create.blade.php
 
-Dùng laravel collective HTML 5.3: https://laravelcollective.com/docs/5.3/html
-composer require "laravelcollective/html":"^5.3.0"
-Tạo Live Template cho form
+    Dùng laravel collective HTML 5.3: https://laravelcollective.com/docs/5.3/html
+    composer require "laravelcollective/html":"^5.3.0"
+    Tạo Live Template cho form
 
-Chú ý: ở phần này ta làm các form field như email, password, select và viết custom request cho các trường nhập vào
+    Chú ý: ở phần này ta làm các form field như email, password, select và viết custom request cho các trường nhập vào
 
-Tạo thêm cột photo ở bảng user: php artisan make:migration add_photo_id_to_users --table=users
+    Tạo thêm cột photo ở bảng user: php artisan make:migration add_photo_id_to_users --table=users
 
-Luồng chương trình:
-AdminUsersController: index() -> create() -> store()
+    Luồng chương trình:
+    AdminUsersController: index() -> create() -> store()
 
-Xem các Model : User, Role, Photo (Tạo các cột trong các bảng, tạo mối quan hệ giữa các model với nhau)
+    Xem các Model : User, Role, Photo (Tạo các cột trong các bảng, tạo mối quan hệ giữa các model với nhau)
+
+11. Displaying photos using an accessor
+    Ôn lại kiến thức cũ:
+    Convention cho ancesstor (viết theo Camel Case) : public function getTênCotAttribute ($giatricuacot)
+                                                      {  //manipulate with the data got   }
+    Convention cho mutator: public function setTênCotAttribute ($giatricuacot)
+                                                      {  //manipulate with the data set   }

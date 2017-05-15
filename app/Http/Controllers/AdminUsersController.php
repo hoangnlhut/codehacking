@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UsersCreateRequest;
 use App\Photo;
 use App\Role;
@@ -90,8 +91,6 @@ class AdminUsersController extends Controller
 
         return redirect('/admin/users');
 
-        //return $request->all();
-
     }
 
     /**
@@ -113,7 +112,13 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $roles = Role::pluck('name', 'id');
+
+//        dd($roles);
+
+        return view('admin.user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
@@ -123,9 +128,51 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserEditRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $input = $request->all();
+
+        if(trim($request->password) == null || trim($request->password) == '')
+        {
+            $input['password'] = $user->password;
+        }
+        else
+        {
+            $input['password'] = bcrypt($request->password);
+        }
+
+        //if you have a photo
+        if($file = $request->file('photo_id'))
+        {
+            if($user->photo_id == null)
+            {
+                $name = time() . $file->getClientOriginalName();
+
+                $file->move('images', $name);
+
+                $photo = Photo::create(['file'=> $name]);
+                $request->photo_id = $photo->id;
+            }
+            else
+            {
+                $name = time() . $request->photo_id->getClientOriginalName();
+                $file->move('images', $name);
+
+                $photo = Photo::findOrFail($user->photo_id);
+                $photo->file = $name;
+                $request->photo_id = $photo->id;
+                $photo->save();
+            }
+
+        }
+
+
+        $user->update($input);
+
+        return redirect('/admin/users');
+
     }
 
     /**
