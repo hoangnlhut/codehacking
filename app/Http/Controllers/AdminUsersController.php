@@ -71,12 +71,10 @@ class AdminUsersController extends Controller
     {
         $input = $request->all();
 
-//        dd($request->input('password'));
-
         //if you have a photo
         if($file = $request->file('photo_id'))
         {
-            $name = time() . $file->getClientOriginalName();
+            $name = $file->getClientOriginalName();
 
             $file->move('images', $name);
 
@@ -132,9 +130,10 @@ class AdminUsersController extends Controller
     {
         $user = User::findOrFail($id);
 
+
         $input = $request->all();
 
-        if(trim($request->password) == null || trim($request->password) == '')
+        if($request->password == null || trim($request->password) == '')
         {
             $input['password'] = $user->password;
         }
@@ -148,7 +147,7 @@ class AdminUsersController extends Controller
         {
             if($user->photo_id == null)
             {
-                $name = time() . $file->getClientOriginalName();
+                $name = $file->getClientOriginalName();
 
                 $file->move('images', $name);
 
@@ -157,10 +156,37 @@ class AdminUsersController extends Controller
             }
             else
             {
-                $name = time() . $request->photo_id->getClientOriginalName();
-                $file->move('images', $name);
+                $name = $file->getClientOriginalName();
+
+                $name1 = "/images/". $name;
+
+                dd($name1);
+
+                $users = User::all()->load('photo');
+
+//                dd($users->photo->file);
+                foreach ($users as $userone)
+                {
+                    echo $userone->photo->file;
+                    echo '<br>';
+//                    if( == $name)
+//                    {
+//                        dd('This image existed');
+//
+//                    }
+                }
+                return 'dung';
+
+
+                dd($user->photo->file == $name);
+
+
+                if($name = $user->photo_>file)
+                {}
+//                $file->move('images', $name);
 
                 $photo = Photo::findOrFail($user->photo_id);
+//                dd($photo->file);
                 $photo->file = $name;
                 $request->photo_id = $photo->id;
                 $photo->save();
